@@ -24,7 +24,7 @@
       </div>
     </nav>
 
-    <div style="background-color: aquamarine; margin-top: 50px;" class="card" v-for="user in users">
+    <div style="margin-top: 50px;" class="notification is-success" v-for="user in users">
       <div class="card-content">
         <p class="title">
           EMAIL: {{user.login}}
@@ -44,7 +44,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
 </script>
 <script>
-  // var socket = io();
   var app = new Vue({
     el: '#app',
     data: {
@@ -58,7 +57,24 @@
       var socket = io(process.env.BASE_URL)
 
       socket.on('new_user', data => {
-        this.users.unshift(data)
+        this.users.unshift(data);
+        var newUser = document.getElementsByClassName('notification')[0];
+
+        var seconds = 0;
+        setInterval(function () {
+          if (seconds > 15) return;
+          if (seconds % 2 == 0) {
+            newUser.classList.remove('is-primary');
+            newUser.classList.add('is-danger');
+          }
+          else {
+            newUser.classList.remove('is-danger');
+            newUser.classList.add('is-primary');
+          }
+          seconds++;
+        }, 1000);
+
+
       })
     }
   })
