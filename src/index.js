@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const socketio = require('socket.io')
 const http = require('http')
+var cors = require('cors')
 
 const { User } = require('../models');
 
@@ -12,6 +13,7 @@ const io = socketio(server)
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
     return res.sendFile(path.join(__dirname + '/views/index.html'))

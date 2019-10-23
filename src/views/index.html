@@ -52,10 +52,10 @@
     },
     mounted() {
       axios
-        .get('https://fatec-portas-abertas-phishing.herokuapp.com/api/users')
+        .get(process.env.BASE_URL + '/api/users')
         .then(response => (this.users = response.data))
 
-      var socket = io('https://fatec-portas-abertas-phishing.herokuapp.com')
+      var socket = io(process.env.BASE_URL)
 
       socket.on('new_user', data => {
         this.users.unshift(data)
