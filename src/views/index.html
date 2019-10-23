@@ -62,7 +62,7 @@
 
         var seconds = 0;
         setInterval(function () {
-          if (seconds > 15) return;
+          if (seconds > 19) return;
           if (seconds % 2 == 0) {
             newUser.classList.remove('is-primary');
             newUser.classList.add('is-danger');
@@ -72,7 +72,7 @@
             newUser.classList.add('is-primary');
           }
           seconds++;
-        }, 1000);
+        }, 500);
 
 
       })

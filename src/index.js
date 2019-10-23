@@ -31,7 +31,7 @@ app.post('/api/users', async (req, res) => {
 })
 
 app.get('/api/users', async (req, res) => {
-    return res.json(await User.findAll({ order: [['id', 'DESC'],] }))
+    return res.json(await User.findAll({ order: [['id', 'DESC'],],limit:10 }))
 })
 
 const port = parseInt(process.env.PORT, 10) || 3333;
