@@ -1,8 +1,11 @@
 const express = require('express')
 const path = require('path')
+const fs = require('fs');
 const socketio = require('socket.io')
 const http = require('http')
 var cors = require('cors')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const { User } = require('../models');
 
@@ -16,7 +19,10 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/', (req, res) => {
-    return res.sendFile(path.join(__dirname + '/views/index.html'))
+    var content = fs.readFileSync(path.join(__dirname + '/views/index.html'), 'utf8')
+        .replace(/process.env.BASE_URL/g, "'" + process.env.BASE_URL + "'")
+
+    return res.send(content)
 })
 
 app.post('/api/users', async (req, res) => {
