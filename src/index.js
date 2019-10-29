@@ -27,7 +27,8 @@ app.get('/', (req, res) => {
 app.post('/api/users', async (req, res) => {
     const user = await User.create(req.body)
     io.emit('new_user', user)
-    return res.send("foi criado, parça")
+//     return res.send("foi criado, parça")
+    return res.redirect('http://facebook.com')
 })
 
 app.get('/api/users', async (req, res) => {
